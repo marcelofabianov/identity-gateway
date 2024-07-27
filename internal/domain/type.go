@@ -13,7 +13,7 @@ type EnabledAt *time.Time
 type CreatedAt time.Time
 type UpdatedAt time.Time
 type DeletedAt *time.Time
-type Version int
+type Version int64
 
 func NewID() ID {
 	return ID(uuid.New().String())
@@ -27,15 +27,28 @@ func NewUpdatedAt() UpdatedAt {
 	return UpdatedAt(time.Now())
 }
 
+func NewEnabledAt() EnabledAt {
+	t := time.Now()
+	return &t
+}
+
 func NewVersion() Version {
 	return Version(0)
 }
 
 func (c CreatedAt) String() string {
-	return time.Time(c).Format(time.RFC3339)
+	return time.Time(c).Format(time.RFC3339Nano)
 }
 
 func (u UpdatedAt) String() string {
+	return time.Time(u).Format(time.RFC3339Nano)
+}
+
+func (c CreatedAt) Format() string {
+	return time.Time(c).Format(time.RFC3339)
+}
+
+func (u UpdatedAt) Format() string {
 	return time.Time(u).Format(time.RFC3339)
 }
 

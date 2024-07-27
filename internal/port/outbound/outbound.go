@@ -2,14 +2,17 @@ package outbound
 
 import (
 	"context"
-
-	"github.com/marcelofabianov/identity-gateway/internal/domain"
 )
 
 // Realm / Repository
 
 type CreateRealmRepositoryInput struct {
-	domain.Realm
+	ID                 string
+	IdentityProviderID string
+	Name               string
+	CreatedAt          string
+	UpdatedAt          string
+	Version            int64
 }
 
 type CreateRealmRepository interface {
