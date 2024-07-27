@@ -1,4 +1,4 @@
-name: "transfer-app"
+name: "identity-gateway"
 
 services:
   identity-app:
