@@ -2,7 +2,6 @@ package err
 
 import (
 	"errors"
-	"fmt"
 )
 
 var (
@@ -12,20 +11,14 @@ var (
 )
 
 func NewUserPasswordHashFailedError(err error) error {
-	fmt.Println(err)
-
 	return ErrUserPasswordHashFailed
 }
 
 func NewUserRepositoryCreateFailedError(err error) error {
-	fmt.Println(err)
-
 	return ErrUserRepositoryCreateFailed
 }
 
 func NewUserEmailAlreadyExistsError(err error) error {
-	fmt.Println(err)
-
 	return ErrUserEmailAlreadyExists
 }
 
