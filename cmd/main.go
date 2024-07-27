@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/marcelofabianov/identity-gateway/config"
+	"github.com/marcelofabianov/identity-gateway/pkg/logger"
 	"github.com/marcelofabianov/identity-gateway/pkg/postgres"
-	"github.com/marcelofabianov/identity-gateway/pkg/zap"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 		log.Fatalf("error loading config: %v", err)
 	}
 
-	logger, err := zap.NewLogger(cfg.Log)
+	logger, err := logger.NewLogger(cfg.Log)
 	if err != nil {
 		log.Fatalf("error creating logger: %v", err)
 	}
@@ -25,7 +25,7 @@ func main() {
 
 	db, err := postgres.Connect(ctx, cfg.Db)
 	if err != nil {
-		log.Fatal("error connecting to database")
+		logger.Fatal("error connecting to database", logger.FieldError(err))
 	}
 	defer func() {
 		if err := db.Close(ctx); err != nil {
