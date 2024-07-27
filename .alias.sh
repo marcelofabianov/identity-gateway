@@ -1,4 +1,5 @@
-alias g="docker exec transfer-app"
+alias g="docker exec identity-app"
+alias glog="docker compose logs -f identity-app"
 alias gb="g bash"
 alias gg="g go"
 alias gr="gg run"
