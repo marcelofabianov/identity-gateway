@@ -2,7 +2,7 @@ FROM golang:1.22-bookworm
 
 ENV GOOSE_MIGRATION_DIR=/app/db/migrations
 ENV GOOSE_DRIVER=postgres
-ENV GOOSE_DBSTRING="postgres://username:password@transfer-db:5432/transfer-db?sslmode=disable"
+ENV GOOSE_DBSTRING="postgres://username:password@identity-db:5432/identity-db?sslmode=disable"
 
 WORKDIR /app
 

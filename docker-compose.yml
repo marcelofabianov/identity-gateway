@@ -4,6 +4,7 @@ services:
   identity-app:
     container_name: identity-app
     restart: always
+    image: marcelofabianov/identity-gateway:latest
     build:
       context: .
       dockerfile: Dockerfile
