@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS realms (
     id UUID PRIMARY KEY,
     identity_provider_id UUID UNIQUE NOT NULL,
     name VARCHAR(100) NOT NULL,
-    description TEXT,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP
