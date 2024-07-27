@@ -1,0 +1,77 @@
+name: "transfer-app"
+
+services:
+  transfer-app:
+    container_name: transfer-app
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${TFR_API_PORT:-8081}:8081'
+    depends_on:
+      - transfer-db
+      - rabbitmq
+    networks:
+      - transfer-network
+    working_dir: /app
+    volumes:
+      - .:/app
+
+  transfer-db:
+    container_name: transfer-db
+    restart: always
+    image: 'postgres:16.2'
+    ports:
+      - '${TFR_PG_PORT:-5432}:5432'
+    environment:
+      POSTGRES_USER: ${TFR_PG_USER:-username}
+      POSTGRES_PASSWORD: ${TFR_PG_PASSWORD:-password}
+      POSTGRES_DB: ${TFR_PG_DATABASE:-transfer-db}
+    volumes:
+      - transfer-data:/var/lib/postgresql/data:rw
+    networks:
+      - transfer-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U ${TFR_PG_USER:-username} -d ${TFR_PG_DATABASE:-transfer-db}'"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    image: 'rabbitmq:3-management'
+    ports:
+      - '${RABBITMQ_PORT:-5672}:5672'
+      - '${RABBITMQ_MANAGEMENT_PORT:-15672}:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-username}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-password}
+    networks:
+      - transfer-network
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sSf http://localhost:15672/api/healthchecks/node | grep '\"status\":\"ok\"'"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  transfer-data:
+    driver: local
+  rabbitmq-data:
+    driver: local
+
+networks:
+  transfer-network:
+    driver: bridge
