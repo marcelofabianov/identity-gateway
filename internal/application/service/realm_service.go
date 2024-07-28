@@ -28,6 +28,7 @@ func (s *RealmService) Create(ctx context.Context, input inbound.CreateRealmServ
 	}
 
 	// Todo: dispatch realm.created event
+	// Todo: Logger
 
 	return inbound.CreateRealmServiceOutput{
 		ID:                 outputUC.Realm.ID,

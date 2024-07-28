@@ -9,7 +9,8 @@ import (
 type ID string
 type Email string
 type Password string
-type EnabledAt *time.Time
+type DocumentRegistry string
+type Enabled bool
 type CreatedAt time.Time
 type UpdatedAt time.Time
 type DeletedAt *time.Time
@@ -25,11 +26,6 @@ func NewCreatedAt() CreatedAt {
 
 func NewUpdatedAt() UpdatedAt {
 	return UpdatedAt(time.Now())
-}
-
-func NewEnabledAt() EnabledAt {
-	t := time.Now()
-	return &t
 }
 
 func NewVersion() Version {
@@ -66,4 +62,12 @@ func (e Email) String() string {
 
 func (p Password) String() string {
 	return string(p)
+}
+
+func (d DocumentRegistry) String() string {
+	return string(d)
+}
+
+func (e Enabled) Bool() bool {
+	return bool(e)
 }

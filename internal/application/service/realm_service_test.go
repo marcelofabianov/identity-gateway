@@ -38,7 +38,7 @@ func (s *RealmServiceTestSuite) TestCreate_Success() {
 
 	ctx := context.Background()
 
-	outboundUC := inbound.CreateRealmUseCaseOutput{
+	outputUC := inbound.CreateRealmUseCaseOutput{
 		Realm: domain.Realm{
 			ID:                 domain.NewID(),
 			IdentityProviderID: inputSe.IdentityProviderID,
@@ -51,7 +51,7 @@ func (s *RealmServiceTestSuite) TestCreate_Success() {
 
 	s.createRealmMock.On("Execute", ctx, mock.MatchedBy(func(args inbound.CreateRealmUseCaseInput) bool {
 		return args.IdentityProviderID == inputSe.IdentityProviderID && args.Name == inputSe.Name
-	})).Return(outboundUC, nil)
+	})).Return(outputUC, nil)
 
 	//Act
 	result, err := s.service.Create(ctx, inputSe)
@@ -60,16 +60,16 @@ func (s *RealmServiceTestSuite) TestCreate_Success() {
 	s.Require().NoError(err)
 	s.Equal(inputSe.IdentityProviderID, result.IdentityProviderID)
 	s.Equal(inputSe.Name, result.Name)
-	s.Equal(outboundUC.Realm.ID, result.ID)
-	s.Equal(outboundUC.Realm.IdentityProviderID, result.IdentityProviderID)
-	s.Equal(outboundUC.Realm.Name, result.Name)
-	s.Equal(outboundUC.Realm.CreatedAt, result.CreatedAt)
-	s.Equal(outboundUC.Realm.UpdatedAt, result.UpdatedAt)
+	s.Equal(outputUC.Realm.ID, result.ID)
+	s.Equal(outputUC.Realm.IdentityProviderID, result.IdentityProviderID)
+	s.Equal(outputUC.Realm.Name, result.Name)
+	s.Equal(outputUC.Realm.CreatedAt, result.CreatedAt)
+	s.Equal(outputUC.Realm.UpdatedAt, result.UpdatedAt)
 	s.Nil(result.DeletedAt)
-	s.Equal(outboundUC.Realm.Version, result.Version)
+	s.Equal(outputUC.Realm.Version, result.Version)
 }
 
-func (s *RealmServiceTestSuite) TestCreate_Error() {
+func (s *RealmServiceTestSuite) TestCreate_Fail_CreateRealmUseCaseError() {
 	//Arrange
 	inputSe := inbound.CreateRealmServiceInput{
 		IdentityProviderID: "identity_provider_id",

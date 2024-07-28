@@ -1,14 +1,15 @@
 package domain
 
 type User struct {
-	ID        ID
-	RealmID   ID
-	Name      string
-	Email     Email
-	Password  Password
-	EnabledAt EnabledAt
-	CreatedAt CreatedAt
-	UpdatedAt UpdatedAt
-	DeletedAt DeletedAt
-	Version   Version
+	ID               ID
+	RealmID          string
+	Name             string
+	Email            Email
+	Password         Password
+	DocumentRegistry DocumentRegistry
+	Enabled          Enabled
+	CreatedAt        CreatedAt
+	UpdatedAt        UpdatedAt
+	DeletedAt        DeletedAt
+	Version          Version
 }
