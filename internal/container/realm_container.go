@@ -19,26 +19,26 @@ type RealmContainer struct {
 func NewRealmContainer(db *sql.DB) *RealmContainer {
 	container := dig.New()
 
-	registerRepositories(container, db)
-	registerUseCase(container)
-	registerServices(container)
+	realmRegisterRepositories(container, db)
+	realmRegisterUseCase(container)
+	realmRegisterServices(container)
 
 	return &RealmContainer{container}
 }
 
-func registerRepositories(c *dig.Container, db *sql.DB) {
+func realmRegisterRepositories(c *dig.Container, db *sql.DB) {
 	c.Provide(func() outbound.RealmRepository {
 		return postgres.NewRealmRepository(db)
 	})
 }
 
-func registerUseCase(c *dig.Container) {
+func realmRegisterUseCase(c *dig.Container) {
 	c.Provide(func(repo outbound.RealmRepository) inbound.CreateRealmUseCase {
 		return usecase.NewCreateRealmUseCase(repo)
 	})
 }
 
-func registerServices(c *dig.Container) {
+func realmRegisterServices(c *dig.Container) {
 	c.Provide(func(createRealm inbound.CreateRealmUseCase) inbound.RealmService {
 		return service.NewRealmService(createRealm)
 	})
