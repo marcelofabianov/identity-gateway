@@ -12,6 +12,7 @@ type Config struct {
 	Name     string
 	Log      LogConfig
 	Db       DatabaseConfig
+	Api      ApiServerConfig
 }
 
 type LogConfig struct {
@@ -28,6 +29,15 @@ type DatabaseConfig struct {
 	Password string
 	Database string
 	SslMode  string
+}
+
+type ApiServerConfig struct {
+	Host     string
+	Port     string
+	CertPath string
+	KeyPath  string
+	TimeOut  string
+	Healthz  string
 }
 
 func NewConfig() (*Config, error) {
@@ -53,6 +63,14 @@ func NewConfig() (*Config, error) {
 			Password: os.Getenv("IG_DB_PASSWORD"),
 			Database: os.Getenv("IG_DB_DATABASE"),
 			SslMode:  os.Getenv("IG_DB_MODE"),
+		},
+		Api: ApiServerConfig{
+			Host:     os.Getenv("IG_API_HOST"),
+			Port:     os.Getenv("IG_API_PORT"),
+			CertPath: os.Getenv("IG_API_CERT_PATH"),
+			KeyPath:  os.Getenv("IG_API_KEY_PATH"),
+			TimeOut:  os.Getenv("IG_API_TIMEOUT"),
+			Healthz:  os.Getenv("IG_API_HEALTHZ"),
 		},
 	}
 
