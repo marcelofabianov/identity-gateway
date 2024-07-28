@@ -1,0 +1,26 @@
+
+syntax = "proto3";
+
+package healthz;
+
+option go_package = "github.com/marcelofabianov/identity-gateway/api/v1/gen";
+
+service Healthz {
+  rpc Check(CheckRequest) returns (CheckResponse);
+}
+
+message CheckRequest {
+  string token = 1;
+}
+
+message CheckResponse {
+  enum Status {
+    STATUS_UNKNOWN_UNSPECIFIED = 0;
+    STATUS_OK = 1;
+    STATUS_DEGRADED = 2;
+    STATUS_ERROR = 3;
+  }
+
+  Status status = 1;
+  string message = 2;
+}
