@@ -2,7 +2,7 @@ package domain
 
 type Realm struct {
 	ID                 ID
-	IdentityProviderID ID
+	IdentityProviderID string
 	Name               string
 	CreatedAt          CreatedAt
 	UpdatedAt          UpdatedAt
