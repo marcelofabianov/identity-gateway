@@ -14,13 +14,6 @@ message CheckRequest {
 }
 
 message CheckResponse {
-  enum Status {
-    STATUS_UNKNOWN_UNSPECIFIED = 0;
-    STATUS_OK = 1;
-    STATUS_DEGRADED = 2;
-    STATUS_ERROR = 3;
-  }
-
-  Status status = 1;
+  string status = 1;
   string message = 2;
 }
