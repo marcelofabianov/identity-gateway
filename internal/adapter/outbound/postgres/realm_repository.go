@@ -22,12 +22,12 @@ func (r *RealmRepository) Create(ctx context.Context, input outbound.CreateRealm
 	`
 
 	_, err := r.Db.ExecContext(ctx, query,
-		input.ID,
-		input.IdentityProviderID,
-		input.Name,
-		input.CreatedAt,
-		input.UpdatedAt,
-		input.Version,
+		input.Realm.ID.String(),
+		input.Realm.IdentityProviderID,
+		input.Realm.Name,
+		input.Realm.CreatedAt.String(),
+		input.Realm.UpdatedAt.String(),
+		input.Realm.Version.Int(),
 	)
 	if err != nil {
 		return err
