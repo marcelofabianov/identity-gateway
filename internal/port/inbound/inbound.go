@@ -78,10 +78,9 @@ type CreateUserServiceInput struct {
 
 type CreateUserServiceOutput struct {
 	ID               domain.ID
-	RealmID          domain.ID
+	RealmID          string
 	Name             string
 	Email            domain.Email
-	Password         domain.Password
 	DocumentRegistry domain.DocumentRegistry
 	Enabled          domain.Enabled
 	CreatedAt        domain.CreatedAt
