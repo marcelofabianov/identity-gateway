@@ -42,14 +42,16 @@ func (s *RealmRepositoryTestSuite) TestCreateRealm_Success() {
 	}
 	defer db.Close()
 
-	input := outbound.CreateRealmRepositoryInput{
-		ID:                 domain.NewID().String(),
+	realm := domain.Realm{
+		ID:                 domain.NewID(),
 		IdentityProviderID: domain.NewID().String(),
 		Name:               "realm-name",
-		CreatedAt:          domain.NewCreatedAt().String(),
-		UpdatedAt:          domain.NewUpdatedAt().String(),
-		Version:            domain.NewVersion().Int(),
+		CreatedAt:          domain.NewCreatedAt(),
+		UpdatedAt:          domain.NewUpdatedAt(),
+		Version:            domain.NewVersion(),
 	}
+
+	input := outbound.CreateRealmRepositoryInput{Realm: realm}
 
 	repo := postgres.NewRealmRepository(db)
 
@@ -66,10 +68,10 @@ func (s *RealmRepositoryTestSuite) TestCreateRealm_Success() {
 	query := `SELECT id FROM realms WHERE id = $1`
 
 	var id string
-	err = db.QueryRowContext(ctx, query, input.ID).Scan(&id)
+	err = db.QueryRowContext(ctx, query, input.Realm.ID).Scan(&id)
 
 	s.NoError(err)
-	s.Equal(input.ID, id)
+	s.Equal(input.Realm.ID.String(), id)
 }
 
 func TestRealmRepositoryTestSuite(t *testing.T) {
