@@ -44,6 +44,12 @@ type RealmService interface {
 
 // User / UseCase
 
+// PKG
+type PasswordHasher interface {
+	Hash(data string) (string, error)
+	Compare(data, encodedHash string) (bool, error)
+}
+
 type CreateUserUseCaseInput struct {
 	RealmID          string
 	Name             string
@@ -61,12 +67,6 @@ type CreateUserUseCase interface {
 }
 
 // User / Service
-
-// PKG
-type PasswordHasher interface {
-	Hash(data string) (string, error)
-	Compare(data, encodedHash string) (bool, error)
-}
 
 type CreateUserServiceInput struct {
 	RealmID          string
