@@ -25,7 +25,7 @@ func (r *UserRepository) Create(ctx context.Context, input outbound.CreateUserRe
 
 	_, err := r.db.ExecContext(ctx, query,
 		input.User.ID.String(),
-		input.User.RealmID.String(),
+		input.User.RealmID,
 		input.User.Name,
 		input.User.Email.String(),
 		input.User.Password.String(),
