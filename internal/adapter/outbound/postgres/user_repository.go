@@ -19,8 +19,8 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 
 func (r *UserRepository) Create(ctx context.Context, input outbound.CreateUserRepositoryInput) error {
 	query := `
-		INSERT INTO users (id, realm_id, name, email, password, created_at, updated_at, version)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		INSERT INTO users (id, realm_id, name, email, password, document_registry, enabled, created_at, updated_at, version)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 	`
 
 	_, err := r.db.ExecContext(ctx, query,
@@ -29,6 +29,8 @@ func (r *UserRepository) Create(ctx context.Context, input outbound.CreateUserRe
 		input.User.Name,
 		input.User.Email.String(),
 		input.User.Password.String(),
+		input.User.DocumentRegistry.String(),
+		input.User.Enabled.Bool(),
 		input.User.CreatedAt.String(),
 		input.User.UpdatedAt.String(),
 		input.User.Version.Int(),
