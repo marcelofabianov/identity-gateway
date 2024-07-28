@@ -41,3 +41,55 @@ type CreateRealmServiceOutput struct {
 type RealmService interface {
 	Create(ctx context.Context, input CreateRealmServiceInput) (CreateRealmServiceOutput, error)
 }
+
+// User / UseCase
+
+type CreateUserUseCaseInput struct {
+	RealmID          domain.ID
+	Name             string
+	Email            domain.Email
+	Password         domain.Password
+	DocumentRegistry domain.DocumentRegistry
+}
+
+type CreateUserUseCaseOutput struct {
+	User domain.User
+}
+
+type CreateUserUseCase interface {
+	Execute(ctx context.Context, input CreateUserUseCaseInput) (CreateUserUseCaseOutput, error)
+}
+
+// User / Service
+
+// PKG
+type PasswordHasher interface {
+	Hash(data string) (string, error)
+	Compare(data, encodedHash string) (bool, error)
+}
+
+type CreateUserServiceInput struct {
+	RealmID          string
+	Name             string
+	Email            string
+	Password         string
+	DocumentRegistry string
+}
+
+type CreateUserServiceOutput struct {
+	ID               domain.ID
+	RealmID          domain.ID
+	Name             string
+	Email            domain.Email
+	Password         domain.Password
+	DocumentRegistry domain.DocumentRegistry
+	Enabled          domain.Enabled
+	CreatedAt        domain.CreatedAt
+	UpdatedAt        domain.UpdatedAt
+	DeletedAt        domain.DeletedAt
+	Version          domain.Version
+}
+
+type UserService interface {
+	Create(ctx context.Context, input CreateUserServiceInput) (CreateUserServiceOutput, error)
+}
