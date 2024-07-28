@@ -71,7 +71,7 @@ func (s *UserRepositoryTestSuite) TestCreateUser_Success() {
 
 	user := domain.User{
 		ID:               domain.NewID(),
-		RealmID:          domain.ID(realmID),
+		RealmID:          realmID,
 		Name:             "Marcelo",
 		Email:            domain.Email("marcelo@email.com"),
 		Password:         domain.Password("hash-password"),
