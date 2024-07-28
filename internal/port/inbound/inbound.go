@@ -9,7 +9,7 @@ import (
 // Realm / UseCase
 
 type CreateRealmUseCaseInput struct {
-	IdentityProviderID domain.ID
+	IdentityProviderID string
 	Name               string
 }
 
