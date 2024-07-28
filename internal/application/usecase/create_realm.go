@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/marcelofabianov/identity-gateway/internal/domain"
+	"github.com/marcelofabianov/identity-gateway/internal/domain/errors"
 	"github.com/marcelofabianov/identity-gateway/internal/port/inbound"
 	"github.com/marcelofabianov/identity-gateway/internal/port/outbound"
 )
@@ -18,17 +19,21 @@ func NewCreateRealmUseCase(realmRepository outbound.CreateRealmRepository) *Crea
 	}
 }
 
-func (uc *CreateRealmUseCase) Execute(ctx context.Context, input inbound.CreateRealmUseCaseInput) (inbound.CreateRealmUseCaseInput, error) {
-	inputRepo := outbound.CreateRealmRepositoryInput{
-		ID:                 domain.NewID().String(),
-		IdentityProviderID: input.IdentityProviderID.String(),
+func (uc *CreateRealmUseCase) Execute(ctx context.Context, input inbound.CreateRealmUseCaseInput) (inbound.CreateRealmUseCaseOutput, error) {
+	realm := domain.Realm{
+		ID:                 domain.NewID(),
+		IdentityProviderID: input.IdentityProviderID,
 		Name:               input.Name,
-		CreatedAt:          domain.NewCreatedAt().String(),
-		UpdatedAt:          domain.NewUpdatedAt().String(),
-		Version:            domain.NewVersion().Int(),
+		CreatedAt:          domain.NewCreatedAt(),
+		UpdatedAt:          domain.NewUpdatedAt(),
+		Version:            domain.NewVersion(),
 	}
 
-	uc.realmRepository.Create(ctx, inputRepo)
+	inputRepo := outbound.CreateRealmRepositoryInput{Realm: realm}
 
-	return input, nil
+	if err := uc.realmRepository.Create(ctx, inputRepo); err != nil {
+		return inbound.CreateRealmUseCaseOutput{}, errors.NewRealmRepositoryCreateFailedError(err)
+	}
+
+	return inbound.CreateRealmUseCaseOutput{Realm: realm}, nil
 }
