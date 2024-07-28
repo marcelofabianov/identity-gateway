@@ -19,3 +19,17 @@ type CreateRealmRepository interface {
 type RealmRepository interface {
 	CreateRealmRepository
 }
+
+// User / Repository
+
+type CreateUserRepositoryInput struct {
+	User domain.User
+}
+
+type CreateUserRepository interface {
+	Create(ctx context.Context, input CreateUserRepositoryInput) error
+}
+
+type UserRepository interface {
+	CreateUserRepository
+}
