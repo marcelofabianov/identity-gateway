@@ -8,11 +8,11 @@ import (
 )
 
 type RealmRepository struct {
-	Db *sql.DB
+	db *sql.DB
 }
 
 func NewRealmRepository(db *sql.DB) *RealmRepository {
-	return &RealmRepository{Db: db}
+	return &RealmRepository{db: db}
 }
 
 func (r *RealmRepository) Create(ctx context.Context, input outbound.CreateRealmRepositoryInput) error {
@@ -21,7 +21,7 @@ func (r *RealmRepository) Create(ctx context.Context, input outbound.CreateRealm
 		VALUES ($1, $2, $3, $4, $5, $6)
 	`
 
-	_, err := r.Db.ExecContext(ctx, query,
+	_, err := r.db.ExecContext(ctx, query,
 		input.Realm.ID.String(),
 		input.Realm.IdentityProviderID,
 		input.Realm.Name,
