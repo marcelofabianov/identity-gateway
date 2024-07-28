@@ -2,7 +2,7 @@ package domain
 
 type User struct {
 	ID               ID
-	RealmID          ID
+	RealmID          string
 	Name             string
 	Email            Email
 	Password         Password

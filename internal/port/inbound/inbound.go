@@ -45,7 +45,7 @@ type RealmService interface {
 // User / UseCase
 
 type CreateUserUseCaseInput struct {
-	RealmID          domain.ID
+	RealmID          string
 	Name             string
 	Email            domain.Email
 	Password         domain.Password
