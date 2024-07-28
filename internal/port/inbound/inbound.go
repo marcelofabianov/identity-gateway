@@ -24,15 +24,14 @@ type CreateRealmUseCase interface {
 // Realm / Service
 
 type CreateRealmServiceInput struct {
-	IdentityProviderID domain.ID
+	IdentityProviderID string
 	Name               string
 }
 
 type CreateRealmServiceOutput struct {
 	ID                 domain.ID
-	IdentityProviderID domain.ID
+	IdentityProviderID string
 	Name               string
-	Enabled            domain.EnabledAt
 	CreatedAt          domain.CreatedAt
 	UpdatedAt          domain.UpdatedAt
 	DeletedAt          domain.DeletedAt
